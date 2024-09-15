@@ -116,17 +116,23 @@ export const searchUser = async (req, res) => {
     // Get the current user's friends
     const currentUser = await User.findById(userId).populate("friends");
 
-    // Map through the search results and calculate mutual friends
+    // Map through the search results and calculate mutual friends and friendship status
     const results = users.map((user) => {
       // Find mutual friends by intersecting friend lists
       const mutualFriends = currentUser.friends.filter((friend) =>
         user.friends.includes(friend._id)
       );
 
+      // Check if the user is already a friend
+      const isFriend = currentUser.friends.some((friend) =>
+        friend._id.equals(user._id)
+      );
+
       return {
         _id: user._id,
         username: user.username,
         mutualFriends: mutualFriends.length > 0 ? mutualFriends : null,
+        isFriend, // Return true if the user is a friend, otherwise false
       };
     });
 

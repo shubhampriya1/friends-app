@@ -26,6 +26,7 @@ const navItems = [
 export function SidebarComponent() {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const pathname = window.location.pathname;
+
   const { theme, setTheme } = useTheme();
   const { logout } = useAuth();
   return (

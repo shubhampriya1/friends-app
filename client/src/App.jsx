@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Page404 from "./pages/NotFound";
 import Register from "./pages/Register";
+import UserProfileSearch from "./pages/Search";
+import MutualFriends from "./pages/MutualFriends";
 function App() {
   return (
     <Router>
@@ -30,6 +32,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<PrivateRouter />}>
             <Route path="/" element={<Home />} />
+            <Route path="/search" element={<UserProfileSearch />} />
+            <Route path="/friends" element={<MutualFriends />} />
           </Route>
         </Route>
         <Route path="*" element={<Page404 />} />
