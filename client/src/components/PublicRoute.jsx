@@ -12,7 +12,7 @@ export default function PublicRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen w-full">
         <Loader2 size="64" />
       </div>
     );
