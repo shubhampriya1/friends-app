@@ -11,7 +11,11 @@ export default function PublicRoute({ children }) {
   const { loading, user } = useAuth();
 
   if (loading) {
-    return <Loader2 />;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 size="64" />
+      </div>
+    );
   }
 
   return user ? <Navigate to="/" /> : children;

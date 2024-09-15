@@ -6,7 +6,11 @@ const PrivateRouter = () => {
   const { loading, user } = useAuth();
 
   if (loading) {
-    return <Loader2 />;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 size="64" />
+      </div>
+    );
   }
   return user ? <Outlet /> : <Navigate to="/login" />;
 };

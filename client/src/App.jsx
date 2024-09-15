@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import PrivateRouter from "./components/PrivateRoute";
 import PublicRouter from "./components/PublicRoute";
+import Home from "./pages/Home";
 function App() {
   return (
     <Router>
@@ -27,9 +28,7 @@ function App() {
           }
         />
         <Route path="/" element={<PrivateRouter />}>
-          <Route path="/" element={<Navbar />}>
-            <Route path="/" element={<></>} />
-          </Route>
+          <Route path="/" element={<Home />} />
         </Route>
         <Route path="*" element={<Page404 />} />
       </Routes>

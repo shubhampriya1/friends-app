@@ -22,6 +22,7 @@ function AuthProvider({ children }) {
 
   async function logout() {
     Cookies.remove("authtoken");
+    window.location.reload();
   }
 
   useEffect(() => {
