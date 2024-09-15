@@ -19,9 +19,19 @@ function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [topics, setTopics] = useState(""); // New state for topics
 
   async function submit() {
     const backendurl = import.meta.env.VITE_PUBLIC_BACKEND_URL;
+
+    // Split the topics by comma and trim whitespace
+    const topicList = topics.split(",").map((topic) => topic.trim());
+
+    // Enforce a limit of 5 topics
+    if (topicList.length > 5) {
+      toast.error("You can select up to 5 topics only.");
+      return;
+    }
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
@@ -30,8 +40,9 @@ function Register() {
 
     try {
       const { data } = await axios.post(`${backendurl}/api/auth/register`, {
-        username: username, // Sending 'username' for registration
+        username: username,
         password: password,
+        topics: topicList,
       });
 
       Cookies.set("authtoken", data.token, { expires: 7 });
@@ -89,6 +100,20 @@ function Register() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   type="password"
+                />
+              </div>
+
+              {/* Topic input with a limit of 5 */}
+              <div className="flex flex-col items-start gap-1 space-y-1.5">
+                <Label htmlFor="topics">
+                  Topics (up to 5, comma-separated)
+                </Label>
+                <Input
+                  id="topics"
+                  placeholder="Enter topics (e.g. coding, music)"
+                  name="topics"
+                  value={topics}
+                  onChange={(e) => setTopics(e.target.value)}
                 />
               </div>
             </div>

@@ -1,8 +1,17 @@
 import Navbar from "@/components/Navbar";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React from "react";
+import { useModal } from "@/hooks/use-modal";
 
 function Home() {
+  const { setContent } = useModal();
+
+  const openModal = () => {
+    setContent(
+      "Important Notice",
+      "<p>This is <strong>bold</strong> and <em>italic</em> text.</p><p>Here's a <a href='#'>link</a>.</p>"
+    );
+  };
   return (
     <>
       <Navbar />
@@ -26,6 +35,7 @@ function Home() {
         <TabsContent value="suggestions">
           Change your password here.
         </TabsContent>
+        <Button onClick={openModal}>Open Modal</Button>
       </Tabs>
     </>
   );

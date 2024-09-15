@@ -1,10 +1,9 @@
-import User from "../models/User.js";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-// Register a new user
 export const registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, topics } = req.body;
 
   try {
     const userExists = await User.findOne({ username });
@@ -14,7 +13,13 @@ export const registerUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ username, password: hashedPassword });
+
+    // Create new user with topics
+    const user = await User.create({
+      username,
+      password: hashedPassword,
+      topics: topics.slice(0, 5) || [], // Ensure topics is an array, default to empty if not provided
+    });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "30d",
